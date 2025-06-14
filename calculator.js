@@ -99,18 +99,12 @@ window.addEventListener("keydown", (event) => {
     };
 });
 
- let numberOfDot = 1;
-
 function conditionsForEnterDot() {
-    if(displaySecondOperands.textContent.length >= 1 && numberOfDot === 1 && displaySecondOperands.textContent.includes(".") === false) {
-        displaySecondOperands.textContent += "."
-        numberOfDot = 0;
+    if(displaySecondOperands.textContent.length >= 1 && displaySecondOperands.textContent.endsWith(".") === false && displaySecondOperands.textContent.includes(".") === false) {
+        displaySecondOperands.textContent += ".";
     }
-    else if(displaySecondOperands.textContent.includes(".")) {
-        numberOfDot = 0;
-    }
-    else if(displaySecondOperands.textContent.length === 0) {
-        alert("You didn't enter a number yet");
+    else{
+        alert("You didn't enter a number yet or you have a dot in your number or you can't enter 2 dots");
     };
 };
 
@@ -120,13 +114,8 @@ dot.addEventListener("click", () => {
 
 function deleteLastCharacter() {
     displaySecondOperands.textContent = displaySecondOperands.textContent.slice(0, -1);
-    if(displaySecondOperands.textContent.includes(".")) {
-        numberOfDot = 0;
-    }
-    else{
-        numberOfDot = 1;
-    };
 }
+
 buttonDelete.addEventListener("click", () => {
     deleteLastCharacter();
 });
@@ -143,23 +132,12 @@ deleteAll.addEventListener("click", () => {
 containerSigns.addEventListener("click", (event) => {
     let operator = event.target.id;
     
-    if(displaySecondOperands.textContent.endsWith(".")) {
-        alert("The last character is a dot");
-    }
-    else{
-        sendFirstOperandAndSign(operator);
-        numberOfDot = 1;
-    }
+    sendFirstOperandAndSign(operator);
 });
 
 function clearFirstOperandsAndOperator() {
     displayFirstOperands.textContent = "";
     displayOperator.textContent = "";
-
-    if(displaySecondOperands.textContent.includes(".")) {
-        numberOfDot = 0;
-    }
-    
 };
 
 function sendNumbersToCalculationAndDisplarResult() {
