@@ -113,7 +113,12 @@ dot.addEventListener("click", () => {
 });
 
 function deleteLastCharacter() {
-    displaySecondOperands.textContent = displaySecondOperands.textContent.slice(0, -1);
+    if(displaySecondOperands.textContent.length >= 1) {
+        displaySecondOperands.textContent = displaySecondOperands.textContent.slice(0, -1);
+    }
+    else{
+        alert("You have nothing to delete");
+    };
 }
 
 buttonDelete.addEventListener("click", () => {
@@ -125,14 +130,23 @@ deleteAll.addEventListener("click", () => {
         displayFirstOperands.textContent = "";
         displayOperator.textContent = "";
         displaySecondOperands.textContent = "";
-        numberOfDot = 1;
-    };
+    }
+    else{
+        alert("You have nothing to delete");
+    }
 });
 
 containerSigns.addEventListener("click", (event) => {
     let operator = event.target.id;
     
-    sendFirstOperandAndSign(operator);
+    if(operator != "delete" && operator != "delete-all" && operator != "calculation") {
+        if(displaySecondOperands.textContent.length >= 1 && displaySecondOperands.textContent.endsWith(".") === false) {
+            sendFirstOperandAndSign(operator);
+        }
+        else{
+            alert("You can't enter this operator because you didn't enter a number yet");
+        };
+    };
 });
 
 function clearFirstOperandsAndOperator() {
@@ -141,7 +155,8 @@ function clearFirstOperandsAndOperator() {
 };
 
 function sendNumbersToCalculationAndDisplarResult() {
-    if(displaySecondOperands.textContent.length >= 1) {
+    if(displayFirstOperands.textContent.length >= 1 && displayOperator.textContent.length === 1 && displaySecondOperands.textContent.length >= 1) {
+        if(displaySecondOperands.textContent.length >= 1) {
         if(displayOperator.textContent === "+") {
             displaySecondOperands.textContent = add(displayFirstOperands.textContent, displaySecondOperands.textContent);
             clearFirstOperandsAndOperator();
@@ -169,6 +184,10 @@ function sendNumbersToCalculationAndDisplarResult() {
                 displaySecondOperands.textContent = "";
             };
         };
+    };
+    }
+    else{
+        alert("You didn't enter a number yet or you didn't enter an operator");
     };
 };
 
